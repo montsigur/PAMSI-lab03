@@ -1,51 +1,61 @@
 #include "kolejka_tab_c.hpp"
 #include "kolejka_tab_x2.hpp"
 #include "kolejka_stl.hpp"
+#include "kolejka_lab02.hpp"
 #include "timer/src/Timer.h"
 #include <cstdlib>
 #include <ctime>
 using namespace std;
 
-int main() {
+void pomiar(int ilosc) {
 
-  kolejka_tab_c Kc;
-  kolejka_tab_x2 Kx2;
-  kolejka_stl Kstl;
-
-  int val;
+  kolejka_lab02 pomiary;
 
   Timer timer;
-  double tik=0, tak;
   
-  srand(time(NULL));
-  
-  for (int i=0; i<5; i++) {
-
-    val = rand();
-    
-    Kc.dodaj(val);
-    Kx2.dodaj((val+1)*(val+1));
-    Kstl.dodaj(2*val+1);
-    
-  }
+  srand(time(NULL)); 
 
   timer.start();
-  Kc.zawartosc();
+  kolejka_tab_c K_c;
+  for (int i=0; i<ilosc; i++)
+    K_c.dodaj(rand());
   timer.stop();
-  tak = timer.getElapsedTimeInMicroSec();
-  cout << tak - tik << " us" << endl;
+  pomiary.dodaj(new element(timer.getElapsedTimeInMicroSec()));
 
   timer.start();
-  Kx2.zawartosc();
+  kolejka_tab_x2 K_x2;
+  for (int i=0; i<ilosc; i++)
+    K_x2.dodaj(rand());
   timer.stop();
-  tik = timer.getElapsedTimeInMicroSec();
-  cout << tik - tak << " us" << endl;
+  pomiary.dodaj(new element(timer.getElapsedTimeInMicroSec()));
 
   timer.start();
-  Kstl.zawartosc();
+  kolejka_stl K_stl;
+  for (int i=0; i<ilosc; i++)
+    K_stl.dodaj(rand());
   timer.stop();
-  tak = timer.getElapsedTimeInMicroSec();
-  cout << tak - tik << " us" << endl;
+  pomiary.dodaj(new element(timer.getElapsedTimeInMicroSec()));
+
+  timer.start();
+  kolejka_lab02 K_lab02;
+  for (int i=0; i<ilosc; i++)
+    K_lab02.dodaj(new element(rand()));
+  timer.stop();
+  pomiary.dodaj(new element(timer.getElapsedTimeInMicroSec()));
+
+  cout << "Pomiary czasu dodawania dla "
+       << ilosc << " losowych danych" << endl;
+  cout << "\ttab c: " << pomiary.zdejmij()->wartosc << " us" << endl;
+  cout << "\ttab x2: " << pomiary.zdejmij()->wartosc << " us" << endl;
+  cout << "\ttab stl: " << pomiary.zdejmij()->wartosc << " us" << endl;
+  cout << "\ttab lab02: " << pomiary.zdejmij()->wartosc << " us" << endl;
+  cout << endl;
+}
+
+int main() {
+
+  for (int i=16; i <= 2 * 32768; i *= 2)
+    pomiar(i);
   
   return 0;
 }
