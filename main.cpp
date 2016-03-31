@@ -54,8 +54,10 @@ void pomiar(int ilosc) {
 
 int main() {
 
-  for (int i=16; i <= 2 * 32768; i *= 2)
-    pomiar(i);
+  int rozmiary[2] = {1000, 10000};
+  
+  for (int i=0; i<2; i++)
+    pomiar(rozmiary[i]);
   
   return 0;
 }
