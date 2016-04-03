@@ -1,3 +1,5 @@
+#ifndef KOLEJKA_STL_HPP
+#define KOLEJKA_STL_HPP
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -42,3 +44,5 @@ public:
     
   }
 };
+
+#endif

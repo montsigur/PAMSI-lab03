@@ -8,19 +8,20 @@ class kolejka_tab_c: public kolejka_tab<int>{
   
   void powieksz() {
 
-    int* nowa_tab = new int[dlugosc + stala_powiekszania];
+    dlugosc += stala_powiekszania;
+    int* nowa_tab = new int[dlugosc];
 
     for (int i=indeks_poczatkowy; i<=indeks_koncowy; i++)
       nowa_tab[i] = tablica[i];
 
-    dlugosc += stala_powiekszania;
+    delete tablica;
     tablica = nowa_tab;
 
   }
 
 public:
 
-  kolejka_tab_c() : kolejka_tab<int>() { stala_powiekszania = 5; }
+  kolejka_tab_c() : kolejka_tab<int>() { stala_powiekszania = 1000; }
   
 };
 
